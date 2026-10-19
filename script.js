@@ -1,7 +1,7 @@
 // Insights Academy public website interactions.
 // IMPORTANT: replace the placeholder WhatsApp number below before publishing.
 // Use international format with digits only, e.g. Pakistan: 923001234567 (no + or spaces).
-const ACADEMY_WHATSAPP_NUMBER = "923XXXXXXXXX";
+const ACADEMY_WHATSAPP_NUMBER = "923224103315";
 
 document.getElementById("year").textContent = new Date().getFullYear();
 

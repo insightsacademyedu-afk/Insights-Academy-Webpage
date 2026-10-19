@@ -39,19 +39,23 @@ body {
   box-shadow: 0 4px 20px rgba(6, 75, 82, .04);
 }
 
-.brand-mark {
-  position: relative;
-  background: #07535a;
-  color: #fffefa;
-  box-shadow: 0 5px 14px rgba(6, 75, 82, .2);
+.brand-logo {
+  width: 46px;
+  height: 46px;
+  flex: 0 0 46px;
+  overflow: hidden;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  background: #fffefa;
+  box-shadow: 0 4px 14px rgba(6, 75, 82, .12);
 }
 
-.brand-mark span {
-  position: absolute;
-  right: 7px;
-  bottom: 5px;
-  color: #ff7040;
-  line-height: 1;
+.brand-logo img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
 }
 
 .brand-name b {
@@ -284,6 +288,39 @@ body {
 .contact-icon {
   border-color: var(--line);
   color: #07535a;
+}
+
+.contact-details {
+  display: grid;
+  gap: 12px;
+  margin: 30px 0;
+}
+
+.contact-item {
+  display: flex;
+  align-items: center;
+  gap: 13px;
+  width: fit-content;
+}
+
+.contact-item:hover b {
+  color: #c9411c;
+}
+
+.contact-item small,
+.contact-item b {
+  display: block;
+}
+
+.contact-item small {
+  font-size: 9px;
+  letter-spacing: 1.5px;
+  color: #567276;
+}
+
+.contact-item b {
+  font-size: 13px;
+  margin-top: 4px;
 }
 
 .contact-mini small,

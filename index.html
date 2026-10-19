@@ -6,17 +6,18 @@
   <meta name="theme-color" content="#faf9f4">
   <meta name="description" content="Discover Insights Academy — practical learning, supportive teaching, and skills for what comes next. Explore programs and enquire about admissions.">
   <title>Insights Academy | Learn. Grow. Succeed.</title>
+  <link rel="icon" type="image/png" href="assets/insights-academy-mark.png">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css">
-  <link rel="stylesheet" href="academy-theme.css?v=3">
+  <link rel="stylesheet" href="academy-theme.css?v=4">
 </head>
 <body>
   <div class="ambient ambient-one"></div><div class="ambient ambient-two"></div>
   <header class="site-header">
     <a class="brand" href="#home" aria-label="Insights Academy home">
-      <span class="brand-mark">i<span>.</span></span>
+      <span class="brand-logo"><img src="assets/insights-academy-mark.png" alt=""></span>
       <span class="brand-name">INSIGHTS <b>ACADEMY</b></span>
     </a>
     <button class="menu-toggle" aria-label="Toggle navigation" aria-expanded="false">☰</button>
@@ -87,7 +88,10 @@
     <section class="section admissions-section" id="admissions">
       <div class="section-wrap admissions-grid">
         <div class="admissions-copy reveal"><span class="section-kicker">04 / YOUR NEXT STEP</span><h2>Ready to begin<br><span class="gradient-text">your journey?</span></h2><p>Tell us a little about what you're interested in. Your message will be prepared for WhatsApp so you can send it directly to the academy.</p>
-          <div class="contact-mini"><span class="contact-icon">✉</span><div><small>ADMISSIONS</small><b>Let's talk about your goals.</b></div></div>
+          <div class="contact-details" aria-label="Academy contact details">
+            <a class="contact-item" href="tel:+923224103315"><span class="contact-icon" aria-hidden="true">☎</span><span><small>CALL US</small><b>03224103315</b></span></a>
+            <a class="contact-item" href="mailto:insightsacademy.edu@gmail.com"><span class="contact-icon" aria-hidden="true">✉</span><span><small>EMAIL US</small><b>insightsacademy.edu@gmail.com</b></span></a>
+          </div>
           <a class="portal-callout" href="https://insights-academy.onrender.com/login" target="_blank" rel="noopener noreferrer"><span class="portal-icon">↗</span><span><b>Already part of Insights Academy?</b><small>Open the student & management portal</small></span><span class="portal-arrow">→</span></a>
         </div>
         <form class="admission-form reveal" id="admission-form">
@@ -104,7 +108,7 @@
   </main>
 
   <footer class="footer">
-    <div class="section-wrap footer-inner"><a class="brand" href="#home"><span class="brand-mark">i<span>.</span></span><span class="brand-name">INSIGHTS <b>ACADEMY</b></span></a><p>Learn · Grow · Succeed</p><div class="footer-links"><a href="#about">About</a><a href="#programs">Programs</a><a href="#admissions">Admissions</a><a href="https://insights-academy.onrender.com/login" target="_blank" rel="noopener noreferrer">Portal login ↗</a></div><small>© <span id="year"></span> Insights Academy. All rights reserved.</small></div>
+    <div class="section-wrap footer-inner"><a class="brand" href="#home" aria-label="Insights Academy home"><span class="brand-logo"><img src="assets/insights-academy-mark.png" alt=""></span><span class="brand-name">INSIGHTS <b>ACADEMY</b></span></a><p>Learn · Grow · Succeed</p><div class="footer-links"><a href="#about">About</a><a href="#programs">Programs</a><a href="#admissions">Admissions</a><a href="https://insights-academy.onrender.com/login" target="_blank" rel="noopener noreferrer">Portal login ↗</a></div><small>© <span id="year"></span> Insights Academy. All rights reserved.</small></div>
   </footer>
   <script src="script.js"></script>
 </body>
