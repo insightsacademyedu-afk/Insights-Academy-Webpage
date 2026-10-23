@@ -1,0 +1,18 @@
+{
+  "name": "insights-academy",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "node scripts/build.mjs",
+    "dev": "npm run build && wrangler pages dev --persist-to .wrangler/state",
+    "test": "node --test",
+    "check": "node --check script.js && node --check admin/admin.js && node --check functions/api/[[path]].js",
+    "db:local": "wrangler d1 execute local-academy --local --file schema.sql",
+    "predev": "node scripts/setup-local.mjs",
+    "predb:local": "node scripts/setup-local.mjs"
+  },
+  "devDependencies": {
+    "jsdom": "^30.1.3",
+    "wrangler": "^4.0.0"
+  }
+}

@@ -1,0 +1,377 @@
+{
+  "settings": {
+    "name": "Insights Academy",
+    "tagline": "Your journey to success starts here.",
+    "intro": "Evening coaching from KG to Class 12, following the Punjab textbook syllabus. Visit us between 4 and 8 pm, or contact our team about admissions.",
+    "about": "Insights Academy offers evening coaching from KG to Class 12, following the Punjab textbook syllabus. We bring school and college learners together in a setting focused on their next stage of education.\n\nOur academy hours are 4–8 pm. Whether you are looking for junior classes, matric coaching, or intermediate study groups, contact our team to discuss your subjects and individual class schedule.",
+    "board": "Punjab textbook syllabus",
+    "phone": "+923224103315",
+    "whatsapp": "923224103315",
+    "email": "insightsacademy.edu@gmail.com",
+    "address": "",
+    "mapUrl": "",
+    "portalUrl": "https://insights-academy.onrender.com/login",
+    "facebook": "",
+    "instagram": "",
+    "youtube": "",
+    "scholarship": "",
+    "admissions": "Contact the academy to confirm your class, available subjects, timetable, fees, and admission requirements.",
+    "hours": "4–8 pm",
+    "classRange": "KG to Class 12",
+    "heroImage": ""
+  },
+  "programs": [
+    {
+      "title": "KG – Prep",
+      "subjects": "",
+      "timings": "4–8 pm academy hours; contact us for your class slot.",
+      "batchSize": "",
+      "duration": "",
+      "monthlyFee": "Rs. 1,500",
+      "admissionFee": "",
+      "installments": "",
+      "board": "Punjab textbook syllabus",
+      "published": true
+    },
+    {
+      "title": "Class 1",
+      "subjects": "",
+      "timings": "4–8 pm academy hours; contact us for your class slot.",
+      "batchSize": "",
+      "duration": "",
+      "monthlyFee": "Rs. 2,000",
+      "admissionFee": "",
+      "installments": "",
+      "board": "Punjab textbook syllabus",
+      "published": true
+    },
+    {
+      "title": "Class 2",
+      "subjects": "",
+      "timings": "4–8 pm academy hours; contact us for your class slot.",
+      "batchSize": "",
+      "duration": "",
+      "monthlyFee": "Rs. 2,000",
+      "admissionFee": "",
+      "installments": "",
+      "board": "Punjab textbook syllabus",
+      "published": true
+    },
+    {
+      "title": "Class 3",
+      "subjects": "",
+      "timings": "4–8 pm academy hours; contact us for your class slot.",
+      "batchSize": "",
+      "duration": "",
+      "monthlyFee": "Rs. 2,000",
+      "admissionFee": "",
+      "installments": "",
+      "board": "Punjab textbook syllabus",
+      "published": true
+    },
+    {
+      "title": "Class 4",
+      "subjects": "",
+      "timings": "4–8 pm academy hours; contact us for your class slot.",
+      "batchSize": "",
+      "duration": "",
+      "monthlyFee": "Rs. 2,000",
+      "admissionFee": "",
+      "installments": "",
+      "board": "Punjab textbook syllabus",
+      "published": true
+    },
+    {
+      "title": "Class 5",
+      "subjects": "",
+      "timings": "4–8 pm academy hours; contact us for your class slot.",
+      "batchSize": "",
+      "duration": "",
+      "monthlyFee": "Rs. 2,000",
+      "admissionFee": "",
+      "installments": "",
+      "board": "Punjab textbook syllabus",
+      "published": true
+    },
+    {
+      "title": "Class 6",
+      "subjects": "",
+      "timings": "4–8 pm academy hours; contact us for your class slot.",
+      "batchSize": "",
+      "duration": "",
+      "monthlyFee": "Rs. 2,500",
+      "admissionFee": "",
+      "installments": "",
+      "board": "Punjab textbook syllabus",
+      "published": true
+    },
+    {
+      "title": "Class 7",
+      "subjects": "",
+      "timings": "4–8 pm academy hours; contact us for your class slot.",
+      "batchSize": "",
+      "duration": "",
+      "monthlyFee": "Rs. 2,500",
+      "admissionFee": "",
+      "installments": "",
+      "board": "Punjab textbook syllabus",
+      "published": true
+    },
+    {
+      "title": "Class 8",
+      "subjects": "",
+      "timings": "4–8 pm academy hours; contact us for your class slot.",
+      "batchSize": "",
+      "duration": "",
+      "monthlyFee": "Rs. 2,500",
+      "admissionFee": "",
+      "installments": "",
+      "board": "Punjab textbook syllabus",
+      "published": true
+    },
+    {
+      "title": "Class 9",
+      "subjects": "Science & Arts",
+      "timings": "4–8 pm academy hours; contact us for your class slot.",
+      "batchSize": "",
+      "duration": "",
+      "monthlyFee": "Rs. 4,000",
+      "admissionFee": "",
+      "installments": "",
+      "board": "Punjab textbook syllabus",
+      "published": true
+    },
+    {
+      "title": "Class 10",
+      "subjects": "Science & Arts",
+      "timings": "4–8 pm academy hours; contact us for your class slot.",
+      "batchSize": "",
+      "duration": "",
+      "monthlyFee": "Rs. 4,000",
+      "admissionFee": "",
+      "installments": "",
+      "board": "Punjab textbook syllabus",
+      "published": true
+    },
+    {
+      "title": "Class 11",
+      "subjects": "F.Sc. (Pre-Engineering / Pre-Medical), ICS (Physics / Statistics / Economics), F.A & General Science",
+      "timings": "4–8 pm academy hours; contact us for your class slot.",
+      "batchSize": "",
+      "duration": "",
+      "monthlyFee": "Rs. 4,500–5,000 (by study group)",
+      "admissionFee": "",
+      "installments": "",
+      "board": "Punjab textbook syllabus",
+      "published": true
+    },
+    {
+      "title": "Class 12",
+      "subjects": "F.Sc. (Pre-Engineering / Pre-Medical), ICS (Physics / Statistics / Economics), F.A & General Science",
+      "timings": "4–8 pm academy hours; contact us for your class slot.",
+      "batchSize": "",
+      "duration": "",
+      "monthlyFee": "Rs. 4,500–5,000 (by study group)",
+      "admissionFee": "",
+      "installments": "",
+      "board": "Punjab textbook syllabus",
+      "published": true
+    }
+  ],
+  "announcements": [
+    {
+      "title": "Evening coaching from KG to Class 12",
+      "text": "Punjab textbook syllabus. Academy hours: 4–8 pm. Contact us to confirm your class schedule and admission details.",
+      "date": "",
+      "url": "",
+      "published": true
+    }
+  ],
+  "teachers": [],
+  "results": [],
+  "reviews": [],
+  "faqs": [
+    {
+      "question": "Which classes does the academy offer?",
+      "answer": "We offer coaching from KG to Class 12.",
+      "published": true
+    },
+    {
+      "question": "Which syllabus do you follow?",
+      "answer": "We follow the Punjab textbook syllabus.",
+      "published": true
+    },
+    {
+      "question": "What are the academy timings?",
+      "answer": "Academy hours are 4–8 pm. Please contact the academy to confirm the schedule for your individual class.",
+      "published": true
+    },
+    {
+      "question": "How can I find the fee for my class?",
+      "answer": "See our fee structure for tuition and stationery charges. Contact the academy to confirm admission charges, installment options, and your class schedule.",
+      "published": true
+    }
+  ],
+  "gallery": [],
+  "resources": [],
+  "fees": [
+    {
+      "program": "Juniors",
+      "class": "K.G – Prep",
+      "tuition": "Rs. 1,500",
+      "stationery": "Nil",
+      "published": true
+    },
+    {
+      "program": "Juniors",
+      "class": "1st – 5th",
+      "tuition": "Rs. 2,000",
+      "stationery": "Nil",
+      "published": true
+    },
+    {
+      "program": "Juniors",
+      "class": "6th – 8th",
+      "tuition": "Rs. 2,500",
+      "stationery": "Nil",
+      "published": true
+    },
+    {
+      "program": "Matric",
+      "class": "9th (Science & Arts)",
+      "tuition": "Rs. 4,000",
+      "stationery": "Rs. 400",
+      "published": true
+    },
+    {
+      "program": "Matric",
+      "class": "10th (Science & Arts)",
+      "tuition": "Rs. 4,000",
+      "stationery": "Rs. 400",
+      "published": true
+    },
+    {
+      "program": "Intermediate",
+      "class": "F.Sc. (Pre-Engineering / Pre-Medical)",
+      "tuition": "Rs. 5,000",
+      "stationery": "Rs. 400",
+      "published": true
+    },
+    {
+      "program": "Intermediate",
+      "class": "ICS (Physics / Statistics / Economics)",
+      "tuition": "Rs. 5,000",
+      "stationery": "Rs. 400",
+      "published": true
+    },
+    {
+      "program": "Intermediate",
+      "class": "F.A & General Science",
+      "tuition": "Rs. 4,500",
+      "stationery": "Rs. 400",
+      "published": true
+    }
+  ],
+  "features": [
+    {
+      "title": "KG to Class 12",
+      "text": "Coaching for learners at every stage of school and intermediate study.",
+      "published": true
+    },
+    {
+      "title": "Punjab syllabus",
+      "text": "Classes follow the Punjab textbook syllabus.",
+      "published": true
+    },
+    {
+      "title": "Evening coaching",
+      "text": "Academy hours are 4–8 pm. Confirm your individual class slot with us.",
+      "published": true
+    },
+    {
+      "title": "Science & Arts",
+      "text": "Explore matric Science and Arts, and intermediate study groups.",
+      "published": true
+    },
+    {
+      "title": "Student Portal",
+      "text": "A dedicated sign-in for students already enrolled at Insights Academy.",
+      "published": true
+    },
+    {
+      "title": "Easy to connect",
+      "text": "Call or message us directly on WhatsApp with your admission questions.",
+      "published": true
+    }
+  ],
+  "blogs": [
+    {
+      "title": "A simple study routine for evening learners",
+      "slug": "study-routine-for-evening-learners",
+      "category": "Study skills",
+      "date": "",
+      "excerpt": "Make room for revision, rest, and coaching with a routine you can actually follow.",
+      "body": "A useful study routine starts with a realistic plan. List the work you need to finish, then choose two or three tasks for the day. A short list is easier to act on than a timetable that fills every minute.\n\nBefore coaching, spend a few minutes looking over the topic you will study. Write down any questions that come to mind. Bringing those questions to class helps you make better use of the lesson.\n\nAfter class, review the main ideas while they are still familiar. Close your book and try to explain a concept in your own words. If you cannot explain part of it, note it down for your next lesson.\n\nKeep time for meals, rest, and sleep. A routine should help you work steadily and leave enough room for everyday life. Adjust it when your school workload changes.",
+      "image": "",
+      "published": true
+    },
+    {
+      "title": "Preparing for matric: start with the syllabus",
+      "slug": "matric-preparation-start-with-the-syllabus",
+      "category": "Exam preparation",
+      "date": "",
+      "excerpt": "Turn a long list of chapters into smaller, manageable revision goals.",
+      "body": "Start your revision with the syllabus your school follows and the material your teacher has assigned. Write down the chapters you have covered and mark the topics you find difficult. This gives your revision a clear starting point.\n\nDivide each subject into small tasks. Instead of planning to revise an entire subject in one sitting, choose a chapter, a set of questions, or a particular concept. Check your understanding before moving on.\n\nPractise answering questions without looking at the solution first. When you check your work, note the reason for each mistake. A calculation error, a missing definition, and a misunderstood question each need a different kind of practice.\n\nAsk your teacher about topics you are unsure of. For exam dates, paper patterns, and official requirements, use the current information supplied by your school and examination board.",
+      "image": "",
+      "published": true
+    },
+    {
+      "title": "Helping younger learners build a reading habit",
+      "slug": "building-a-reading-habit",
+      "category": "For parents",
+      "date": "",
+      "excerpt": "Small, regular reading sessions can become a welcome part of your child’s day.",
+      "body": "Choose a short reading time that fits comfortably into your family routine. A few pages shared regularly can be easier to maintain than an occasional long session. Let your child help choose a book that interests them.\n\nRead together and give your child time to work through unfamiliar words. Ask simple questions about the pictures, characters, or ideas. The conversation matters as much as finishing the page.\n\nNotice effort and curiosity. A child may want to reread a familiar story, and that can be an enjoyable part of learning. Keep the activity calm and avoid comparing one child’s progress with another’s.\n\nIf your child finds reading consistently difficult, speak with their teacher about the support that would be useful. A shared understanding between parents and teachers can make the next steps clearer.",
+      "image": "",
+      "published": true
+    }
+  ],
+  "courses": [
+    {
+      "title": "Junior classes",
+      "subtitle": "KG & Prep",
+      "level": "juniors",
+      "published": true
+    },
+    {
+      "title": "Primary classes",
+      "subtitle": "Class 1 to Class 5",
+      "level": "primary",
+      "published": true
+    },
+    {
+      "title": "Middle classes",
+      "subtitle": "Class 6 to Class 8",
+      "level": "middle",
+      "published": true
+    },
+    {
+      "title": "Matric",
+      "subtitle": "Class 9 & 10 · Science & Arts",
+      "level": "matric",
+      "published": true
+    },
+    {
+      "title": "F.Sc.",
+      "subtitle": "Pre-Engineering & Pre-Medical",
+      "level": "intermediate",
+      "published": true
+    },
+    {
+      "title": "ICS, F.A & General Science",
+      "subtitle": "Intermediate study groups",
+      "level": "intermediate",
+      "published": true
+    }
+  ]
+}
