@@ -19,10 +19,22 @@ export async function onRequest({request,env,params}) {
  try {
   if(path.startsWith('media/') && method==='GET') {
    const key=path.slice(6);
-   if(!/^[a-zA-Z0-9.-]+$/.test(key) || !env.MEDIA) return json({error:'Image not found.'},404);
-   const object=await env.MEDIA.get(key);
-   if(!object) return json({error:'Image not found.'},404);
-   return new Response(object.body,{headers:{'Content-Type':object.httpMetadata?.contentType || 'application/octet-stream','Cache-Control':'public, max-age=31536000, immutable','X-Content-Type-Options':'nosniff'}});
+   if(!/^[a-zA-Z0-9.-]+$/.test(key)) return json({error:'Image not found.'},404);
+   if(env.MEDIA) {
+    const object=await env.MEDIA.get(key);
+    if(object) return new Response(object.body,{headers:{'Content-Type':object.httpMetadata?.contentType || 'application/octet-stream','Cache-Control':'public, max-age=31536000, immutable','X-Content-Type-Options':'nosniff'}});
+   }
+   if(!env.DB) return json({error:'Image not found.'},404);
+   const media=await env.DB.prepare('SELECT content_type, byte_length, chunk_count FROM uploaded_media WHERE id=?').bind(key).first();
+   if(!media) return json({error:'Image not found.'},404);
+   let index=0;
+   const stream=new ReadableStream({async pull(controller) {
+    if(index>=media.chunk_count) {controller.close();return;}
+    const chunk=await env.DB.prepare('SELECT data FROM media_chunks WHERE media_id=? AND part=?').bind(key,index++).first();
+    if(!chunk) {controller.error(new Error('Image data unavailable.'));return;}
+    controller.enqueue(new Uint8Array(chunk.data));
+   }});
+   return new Response(stream,{headers:{'Content-Type':media.content_type,'Content-Length':String(media.byte_length),'Cache-Control':'public, max-age=31536000, immutable','X-Content-Type-Options':'nosniff'}});
   }
   if(path==='content' && method==='GET') {
    if(!env.DB) return json({content:null});
@@ -78,7 +90,6 @@ export async function onRequest({request,env,params}) {
    return json({ok:true});
   }
   if(path==='admin/upload' && method==='POST') {
-   if(!env.MEDIA) return json({error:'Photo storage is not connected. Add the MEDIA R2 binding first.'},503);
    if(Number(request.headers.get('Content-Length'))>5*1024*1024+10000) return json({error:'Images must be 5 MB or smaller.'},400);
    const data=await request.formData(), file=data.get('file');
    if(!file || typeof file.arrayBuffer!=='function' || file.size>5*1024*1024 || file.size===0) return json({error:'Choose an image up to 5 MB.'},400);
@@ -89,7 +100,13 @@ export async function onRequest({request,env,params}) {
    if(String.fromCharCode(...bytes.slice(0,4))==='RIFF' && String.fromCharCode(...bytes.slice(8,12))==='WEBP') {type='image/webp';extension='webp';}
    if(!type) return json({error:'Upload a JPG, PNG or WebP image.'},400);
    const key=`${crypto.randomUUID()}.${extension}`;
-   await env.MEDIA.put(key,bytes,{httpMetadata:{contentType:type}});
+   if(env.MEDIA) await env.MEDIA.put(key,bytes,{httpMetadata:{contentType:type}});
+   else {
+    const chunkSize=256*1024, count=Math.ceil(bytes.length/chunkSize);
+    const statements=[env.DB.prepare('INSERT INTO uploaded_media(id,content_type,byte_length,chunk_count,created_at) VALUES (?,?,?,?,?)').bind(key,type,bytes.length,count,new Date().toISOString())];
+    for(let part=0;part<count;part++) statements.push(env.DB.prepare('INSERT INTO media_chunks(media_id,part,data) VALUES (?,?,?)').bind(key,part,bytes.slice(part*chunkSize,(part+1)*chunkSize).buffer));
+    await env.DB.batch(statements);
+   }
    return json({url:`/api/media/${key}`});
   }
   return json({error:'Not found.'},404);

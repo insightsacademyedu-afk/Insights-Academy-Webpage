@@ -1,4 +1,4 @@
-﻿# Website pages and owner editing
+# Website pages and owner editing
 
 The layout follows the supplied STEP reference with Insights Academy's own teal and orange branding.
 
@@ -30,4 +30,4 @@ Empty optional sections stay hidden. Scholarships and position holders have usef
 
 Automated checks exercise all seven public pages, menu controls, fee separation, article search and category filters, full article routes, programme filters, old content compatibility, safe text rendering, content validation, and authentication rules. The local server serves the public pages and banner successfully.
 
-These are code and simulated-DOM checks. A connected browser was unavailable for visual review; review the local preview on desktop and mobile before deployment. No changes have been pushed to GitHub or deployed.
+These are code and simulated-DOM checks. A connected browser was unavailable for visual review; review the local preview on desktop and mobile before deployment. The site is pushed to the academy GitHub repository and deployed on Cloudflare Pages. Production stores content and uploaded photos in D1; R2 is optional.
