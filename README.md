@@ -23,7 +23,7 @@ npm ci
 npm run db:local
 ```
 
-The live dashboard uses the same owner password configured in `.dev.vars`, stored separately as an encrypted Cloudflare secret. Never commit the file. For a fresh local setup, create a `.dev.vars` file containing a strong local-only password (at least 16 characters):
+The initial live sign-in uses the bootstrap owner password configured in `.dev.vars`, stored separately as an encrypted Cloudflare secret. The owner can then choose their own password using **Change password** in the dashboard. The chosen live password is stored as a salted hash in D1; it does not change the local `.dev.vars` file. Never commit that file. For a fresh local setup, create a `.dev.vars` file containing a strong local-only password (at least 16 characters):
 
 ```text
 ADMIN_PASSWORD=your-long-private-password
@@ -54,7 +54,7 @@ Existing site: https://insights-academy-webpage.pages.dev/
 
 The website is deployed to the existing Cloudflare Pages project through the connected GitHub main branch. Production uses D1 for content, sessions and uploaded photos. The following steps document how to reproduce the setup.
 
-1. In Cloudflare, create a **D1 database** for academy website content. Open its SQL console and execute all five `CREATE TABLE` statements in `schema.sql`.
+1. In Cloudflare, create a **D1 database** for academy website content. Open its SQL console and execute all six `CREATE TABLE` statements in `schema.sql`.
 2. In the existing Pages project's **Settings → Bindings**, add a D1 binding named **DB** and select that database.
 3. Photo uploads work through D1 without enabling R2. Optionally create an **R2 bucket** and bind it as **MEDIA** if you later want dedicated object storage. New uploads then use R2; existing D1 photo URLs continue to work.
 4. Add an encrypted Pages environment variable / secret named **ADMIN_PASSWORD**. Use a unique password of at least 16 characters. Share it privately with the owner; do not put it in Git or frontend files. Use a separate password and resources for preview deployments if enabling the dashboard there.
@@ -75,7 +75,13 @@ Until the first publish, the page uses `data/content.json` as initial content. W
 
 Owner sessions use random tokens stored as hashes, HttpOnly/SameSite cookies, Secure cookies on HTTPS, eight-hour expiry, and server-side sign-out. Sign-in is limited to five attempts per IP per 15 minutes. Changes require same-origin requests and a valid session. Concurrent edits produce a conflict instead of silently overwriting another saved draft. Content is validated server-side; website text is escaped and links are restricted to HTTP(S) or uploaded media paths.
 
-This is a single-owner CMS. Separate staff accounts, password recovery, content history and admission record management are not included. Rotating the owner password does not revoke existing sessions: to revoke all sessions, clear the `sessions` table in the Cloudflare D1 console as part of the rotation.
+This is a single-owner CMS. Separate staff accounts, automated forgotten-password recovery, content history and admission record management are not included.
+
+**Change password:** sign in, click Change password, enter the current password, then enter and confirm a new password of 12–128 characters. Save any content draft first. The password update takes effect immediately, signs out every device, and returns the owner to the login form. Future sign-ins use the chosen password. Once a chosen password exists, the bootstrap environment secret is no longer accepted for login.
+
+Chosen passwords use a random salt and PBKDF2-SHA-256 with 100,000 iterations. Only the salted hash is stored. Password changes require an existing owner session, the correct current password, same-origin requests, and are throttled. Credential version checks prevent a concurrent login from issuing a session after its password has been replaced. Changing the password does not require publishing website content.
+
+For an existing installation, rerun all CREATE TABLE statements from schema.sql before deploying this upgrade; they preserve existing data and add the owner_credentials table. Forgotten-password recovery requires the site maintainer.
 
 Cloudflare setup reference: https://developers.cloudflare.com/pages/functions/bindings/
 

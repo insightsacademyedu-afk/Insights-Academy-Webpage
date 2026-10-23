@@ -1,7 +1,7 @@
 import { validateContent, publicContent } from '../../lib/content-schema.js';
+import {credential,verifyPassword,makeCredential,allowAttempt} from '../../lib/owner-auth.js';
 const json = (body,status=200,headers={}) => Response.json(body,{status,headers:{'Cache-Control':'no-store',...headers}});
 const digest = async value => Array.from(new Uint8Array(await crypto.subtle.digest('SHA-256',new TextEncoder().encode(value)))).map(x=>x.toString(16).padStart(2,'0')).join('');
-async function equal(a,b) { const x=await digest(a), y=await digest(b); let diff=0; for(let i=0;i<x.length;i++) diff|=x.charCodeAt(i)^y.charCodeAt(i); return diff===0; }
 async function authorized(request,db) {
  const token = request.headers.get('Cookie')?.match(/(?:^|;\s*)academy_session=([a-f0-9]{64})(?:;|$)/)?.[1];
  if (!token) return false;
@@ -46,23 +46,40 @@ export async function onRequest({request,env,params}) {
    if(request.headers.get('Origin') !== new URL(request.url).origin) return json({error:'Invalid request origin.'},403);
   }
   if(path==='login' && method==='POST') {
-   if(!env.ADMIN_PASSWORD || env.ADMIN_PASSWORD.length<16) return json({error:'Owner login is not configured. Set a strong ADMIN_PASSWORD secret of at least 16 characters.'},503);
+   const saved=await credential(env.DB);
+   if(!saved && (!env.ADMIN_PASSWORD || env.ADMIN_PASSWORD.length<16)) return json({error:'Owner login is not configured. Set a strong ADMIN_PASSWORD secret of at least 16 characters.'},503);
    const ip=request.headers.get('CF-Connecting-IP') || 'local';
    const now=Date.now();
-   await env.DB.prepare('DELETE FROM login_attempts WHERE reset_at < ?').bind(now).run();
    await env.DB.prepare('DELETE FROM sessions WHERE expires < ?').bind(now).run();
-   await env.DB.prepare('INSERT INTO login_attempts (ip, attempts, reset_at) VALUES (?,1,?) ON CONFLICT(ip) DO UPDATE SET attempts=attempts+1').bind(ip,now+15*60*1000).run();
-   const attempt=await env.DB.prepare('SELECT attempts FROM login_attempts WHERE ip=?').bind(ip).first();
-   if(attempt.attempts>5) return json({error:'Too many attempts. Please wait 15 minutes.'},429);
+   if(!await allowAttempt(env.DB,ip)) return json({error:'Too many attempts. Please wait 15 minutes.'},429);
    const input=await body(request);
-   if(typeof input.password!=='string' || !await equal(input.password,env.ADMIN_PASSWORD)) return json({error:'Incorrect password.'},401);
+   if(!await verifyPassword(input.password,saved,env.ADMIN_PASSWORD)) return json({error:'Incorrect password.'},401);
    await env.DB.prepare('DELETE FROM login_attempts WHERE ip=?').bind(ip).run();
    const token=Array.from(crypto.getRandomValues(new Uint8Array(32))).map(x=>x.toString(16).padStart(2,'0')).join('');
-   await env.DB.prepare('INSERT INTO sessions(token,expires) VALUES (?,?)').bind(await digest(token),now+8*60*60*1000).run();
+   const session=await env.DB.prepare('INSERT INTO sessions(token,expires) SELECT ?,? WHERE COALESCE((SELECT version FROM owner_credentials WHERE id=1),0)=?').bind(await digest(token),now+8*60*60*1000,saved?.version || 0).run();
+   if(!session.meta.changes) return json({error:'The password was just changed. Sign in with the new password.'},401);
    const secure=new URL(request.url).protocol==='https:' ? '; Secure' : '';
    return json({ok:true},200,{'Set-Cookie':`academy_session=${token}; Path=/api; HttpOnly; SameSite=Strict; Max-Age=28800${secure}`});
   }
   if(!await authorized(request,env.DB)) return json({error:'Please sign in.'},401);
+  if(path==='admin/password' && method==='POST') {
+   const input=await body(request);
+   if(typeof input.newPassword!=='string' || input.newPassword.length<12 || input.newPassword.length>128) return json({error:'Choose a password between 12 and 128 characters.'},400);
+   if(input.newPassword!==input.confirmPassword) return json({error:'The new passwords do not match.'},400);
+   if(input.newPassword===input.currentPassword) return json({error:'Choose a different new password.'},400);
+   const attemptKey='password:'+(request.headers.get('CF-Connecting-IP') || 'local');
+   if(!await allowAttempt(env.DB,attemptKey)) return json({error:'Too many attempts. Please wait 15 minutes.'},429);
+   const saved=await credential(env.DB);
+   if(!await verifyPassword(input.currentPassword,saved,env.ADMIN_PASSWORD)) return json({error:'Current password is incorrect.'},400);
+   const next=await makeCredential(input.newPassword),version=(saved?.version || 0)+1;
+   const results=await env.DB.batch([
+    env.DB.prepare('INSERT INTO owner_credentials(id,salt,password_hash,iterations,version,updated_at) VALUES (1,?,?,?,?,?) ON CONFLICT(id) DO UPDATE SET salt=excluded.salt,password_hash=excluded.password_hash,iterations=excluded.iterations,version=excluded.version,updated_at=excluded.updated_at WHERE owner_credentials.version=?').bind(next.salt,next.password_hash,next.iterations,version,new Date().toISOString(),saved?.version || 0),
+    env.DB.prepare('DELETE FROM sessions WHERE EXISTS(SELECT 1 FROM owner_credentials WHERE id=1 AND salt=? AND version=?)').bind(next.salt,version)
+   ]);
+   if(!results[0].meta.changes) return json({error:'The password was changed in another session. Sign in again.'},409);
+   await env.DB.prepare('DELETE FROM login_attempts WHERE ip=?').bind(attemptKey).run();
+   return json({ok:true},200,{'Set-Cookie':'academy_session=; Path=/api; HttpOnly; SameSite=Strict; Max-Age=0'});
+  }
   if(path==='logout' && method==='POST') {
    const token=request.headers.get('Cookie').match(/academy_session=([a-f0-9]{64})/)[1];
    await env.DB.prepare('DELETE FROM sessions WHERE token=?').bind(await digest(token)).run();

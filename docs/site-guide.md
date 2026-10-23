@@ -31,3 +31,8 @@ Empty optional sections stay hidden. Scholarships and position holders have usef
 Automated checks exercise all seven public pages, menu controls, fee separation, article search and category filters, full article routes, programme filters, old content compatibility, safe text rendering, content validation, and authentication rules. The local server serves the public pages and banner successfully.
 
 These are code and simulated-DOM checks. A connected browser was unavailable for visual review; review the local preview on desktop and mobile before deployment. The site is pushed to the academy GitHub repository and deployed on Cloudflare Pages. Production stores content and uploaded photos in D1; R2 is optional.
+
+
+## Choosing an owner password
+
+After the initial sign-in, click **Change password** at the top of the dashboard. Enter the current password and a new password of at least 12 characters, confirm it, and click **Update password**. The owner is signed out and can sign in again with their chosen password. All other devices are signed out as well. Save any content draft before changing a password. This is independent of Save Draft and Publish.

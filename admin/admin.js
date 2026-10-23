@@ -5,7 +5,7 @@ const status=(message,error=false)=>{$('status').textContent=message;$('status')
 async function api(path,options={}) {
  const response=await fetch('/api/'+path,{...options,headers:options.body instanceof FormData?{}:{'Content-Type':'application/json',...options.headers}});
  let data;try{data=await response.json();}catch{throw new Error('The server is unavailable. Check the Cloudflare setup in README.');}
- if(!response.ok){if(response.status===401 && path!=='login'){ $('workspace').hidden=true;$('login-form').hidden=false; }throw new Error(data.error || 'Request failed.');}
+ if(!response.ok){if(response.status===401 && path!=='login'){ resetPasswordPanel();$('workspace').hidden=true;$('login-form').hidden=false; }throw new Error(data.error || 'Request failed.');}
  return data;
 }
 function changed(){dirty=true;$('save-state').textContent='Unsaved changes';}
@@ -51,10 +51,31 @@ async function openWorkspace(){
 $('login-form').addEventListener('submit',async e=>{e.preventDefault();const b=e.submitter;b.disabled=true;try{await api('login',{method:'POST',body:JSON.stringify({password:$('password').value})});$('password').value='';await openWorkspace();}catch(e){status(e.message,true);}finally{b.disabled=false;}});
 $('editor').addEventListener('submit',e=>e.preventDefault());
 async function save(){const clean=validateContent(content);const result=await api('admin/content',{method:'PUT',body:JSON.stringify({content:clean,version})});version=result.version;dirty=false;$('save-state').textContent='Draft saved';status('Draft saved. Preview or publish when ready.');}
-async function busy(action){const controls=['save','publish','preview','logout'].map($);controls.forEach(b=>b.disabled=true);$('editor').inert=true;try{await action();}catch(e){status(e.message,true);}finally{controls.forEach(b=>b.disabled=false);$('editor').inert=false;}}
+async function busy(action){const controls=['save','publish','preview','logout','change-password','password-submit'].map($);controls.forEach(b=>b.disabled=true);$('editor').inert=true;$('password-settings').inert=true;try{await action();}catch(e){status(e.message,true);}finally{controls.forEach(b=>b.disabled=false);$('editor').inert=false;$('password-settings').inert=false;}}
 $('save').onclick=()=>busy(save);
 $('publish').onclick=()=>busy(async()=>{await save();await api('admin/publish',{method:'POST',body:JSON.stringify({version})});status('Published. Your updates are now live on the website.');$('save-state').textContent='Published '+new Date().toLocaleTimeString();});
 $('preview').onclick=()=>{const win=window.open('/admin/preview.html','_blank');busy(async()=>{await save();if(win)win.location.reload();else status('Draft saved. Allow popups to open the preview.');});};
-$('logout').onclick=()=>busy(async()=>{if(dirty&&!confirm('Discard unsaved changes and sign out?'))return;await api('logout',{method:'POST',body:'{}'});dirty=false;content=null;$('workspace').hidden=true;$('login-form').hidden=false;status('Signed out.');});
+$('logout').onclick=()=>busy(async()=>{if(dirty&&!confirm('Discard unsaved changes and sign out?'))return;await api('logout',{method:'POST',body:'{}'});resetPasswordPanel();dirty=false;content=null;$('workspace').hidden=true;$('login-form').hidden=false;status('Signed out.');});
+function resetPasswordPanel(){
+ $('password-form').reset();$('password-settings').hidden=true;$('change-password').setAttribute('aria-expanded','false');$('password-status').textContent='';
+}
+$('change-password').onclick=()=>{
+ if(!$('password-settings').hidden){resetPasswordPanel();return;}
+ $('password-settings').hidden=false;$('change-password').setAttribute('aria-expanded','true');$('current-password').focus();
+};
+$('password-cancel').onclick=resetPasswordPanel;
+$('password-form').addEventListener('submit',event=>{
+ event.preventDefault();const note=$('password-status');note.className='error';
+ if(dirty){note.textContent='Save your content draft before changing your password.';return;}
+ if($('new-password').value!==$('confirm-password').value){note.textContent='The new passwords do not match.';return;}
+ const input={currentPassword:$('current-password').value,newPassword:$('new-password').value,confirmPassword:$('confirm-password').value};
+ busy(async()=>{
+  try{
+   await api('admin/password',{method:'POST',body:JSON.stringify(input)});
+   resetPasswordPanel();content=null;$('workspace').hidden=true;$('login-form').hidden=false;$('password').value='';
+   status('Password updated. Sign in with your new password from now on.');$('password').focus();
+  }catch(error){note.textContent=error.message;if($('workspace').hidden)status(error.message,true);}
+ });
+});
 window.addEventListener('beforeunload',e=>{if(dirty){e.preventDefault();e.returnValue='';}});
 openWorkspace().catch(e=>{if(e.message!=='Please sign in.')status(e.message,true);});

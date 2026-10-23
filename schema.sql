@@ -3,3 +3,4 @@ CREATE TABLE IF NOT EXISTS sessions (token TEXT PRIMARY KEY, expires INTEGER NOT
 CREATE TABLE IF NOT EXISTS login_attempts (ip TEXT PRIMARY KEY, attempts INTEGER NOT NULL, reset_at INTEGER NOT NULL);
 CREATE TABLE IF NOT EXISTS uploaded_media (id TEXT PRIMARY KEY, content_type TEXT NOT NULL, byte_length INTEGER NOT NULL, chunk_count INTEGER NOT NULL, created_at TEXT NOT NULL);
 CREATE TABLE IF NOT EXISTS media_chunks (media_id TEXT NOT NULL REFERENCES uploaded_media(id), part INTEGER NOT NULL, data BLOB NOT NULL, PRIMARY KEY (media_id, part));
+CREATE TABLE IF NOT EXISTS owner_credentials (id INTEGER PRIMARY KEY CHECK(id=1), salt TEXT NOT NULL, password_hash TEXT NOT NULL, iterations INTEGER NOT NULL, version INTEGER NOT NULL, updated_at TEXT NOT NULL);
