@@ -53,7 +53,15 @@ function render(data){
  set('footer-name',settings.name);set('footer-address',settings.address || 'Call us for directions and to arrange your visit.');
  for(const a of document.querySelectorAll('.header-phone')){a.textContent=settings.phone;a.href=`tel:${settings.phone}`;a.hidden=!settings.phone;}
  for(const el of document.querySelectorAll('.header-hours'))el.textContent=settings.hours;
- for(const el of document.querySelectorAll('.portal-link')){el.hidden=!safeUrl(settings.portalUrl);if(!el.hidden)el.href=safeUrl(settings.portalUrl);}
+ const portalUrl=safeUrl(settings.portalUrl);
+ const portalLink=nav.querySelector('.nav-portal') || document.querySelector('footer .portal-link') || document.createElement('a');
+ portalLink.classList.add('nav-cta','nav-portal');
+ portalLink.textContent='Student Portal ↗';
+ portalLink.target='_blank';
+ portalLink.rel='noopener';
+ nav.insertBefore(portalLink,nav.querySelector('.nav-cta'));
+ document.querySelector('#admissions .portal-link')?.closest('p')?.remove();
+ for(const el of document.querySelectorAll('.portal-link')){el.hidden=!portalUrl;if(portalUrl)el.href=portalUrl;}
  const email=document.querySelector('.footer-email');email.textContent=settings.email;email.href=`mailto:${settings.email}`;email.hidden=!settings.email;
  $('social-links').innerHTML=['facebook','instagram','youtube'].map(k=>external(settings[k],k[0].toUpperCase()+k.slice(1))).join('');
  $('map-link').hidden=!safeUrl(settings.mapUrl);if(!$('map-link').hidden)$('map-link').href=safeUrl(settings.mapUrl);

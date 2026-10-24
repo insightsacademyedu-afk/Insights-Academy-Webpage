@@ -21,6 +21,18 @@ test('home has academy content and navigation, with no fee table or blog article
  assert.equal(d.querySelector('#nav [data-page=blogs]').getAttribute('href'),'/blogs.html');
  const menu=d.querySelector('.menu-toggle');menu.click();assert.equal(menu.getAttribute('aria-expanded'),'true');menu.click();assert.equal(menu.getAttribute('aria-expanded'),'false');dom.window.close();
 });
+test('student portal is prominent in the main navigation on every public page',async()=>{
+ for(const file of ['index.html','fee-structure.html','programs.html','blogs.html','blog.html','scholarships.html','position-holders.html']){
+  const dom=await render(file),d=dom.window.document,portal=d.querySelector('#nav .nav-portal');
+  assert.ok(portal,file+' has a portal link in the header');
+  assert.equal(portal.href,seed.settings.portalUrl);
+  assert.equal(portal.hidden,false);
+  assert.ok(portal.classList.contains('nav-cta'));
+  assert.equal(d.querySelector('footer .portal-link'),null);
+  if(file==='index.html')assert.equal(d.querySelector('#admissions .portal-link'),null);
+  dom.window.close();
+ }
+});
 test('fee page displays the eight supplied rows only in its dedicated table',async()=>{const dom=await render('fee-structure.html'),d=dom.window.document;assert.equal(d.querySelectorAll('#fee-rows tr').length,8);assert.ok(d.querySelector('#fee-rows').textContent.includes('Rs. 1,500'));assert.equal(d.querySelector('#nav [aria-current=page]').textContent,'Fee Structure');dom.window.close();});
 test('blogs support search, categories, and full article routes',async()=>{
  const dom=await render('blogs.html'),d=dom.window.document;assert.equal(d.querySelectorAll('.blog-card').length,3);
